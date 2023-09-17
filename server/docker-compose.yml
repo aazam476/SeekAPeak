@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  api:
+    build: .
+    container_name: seekapeek-seekapeek
+    restart: unless-stopped
+    ports:
+      - 80:80
+    links:
+      - db
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PASSWORD=q6cHyMCXEJxXIiaa7i1kFOJmUnnZKbdO
+      - MYSQL_DATABASE=seekapeek
+      - MYSQL_USER=seekapeek
+      
+  db:
+    image: mariadb:latest
+    container_name: seekapeek-mariadb
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=lYwp2iuFS8gIdpxiDHYrwmYhoYb1SutB
+      - MYSQL_PASSWORD=q6cHyMCXEJxXIiaa7i1kFOJmUnnZKbdO
+      - MYSQL_DATABASE=seekapeek
+      - MYSQL_USER=seekapeek
